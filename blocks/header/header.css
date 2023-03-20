@@ -1,0 +1,21 @@
+.header {
+    margin-top: 28px;
+    height: 56px;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #545454;
+}
+
+@media screen and (min-width: 320px) {
+    .header {
+        margin-top: calc((100vw - 320px)/(880 - 320) * (45 - 28) + 28px);
+        height: calc((100vw - 320px)/(880 - 320) * (74 - 56) + 56px);
+    }
+}
+
+@media screen and (min-width: 880px) {
+    .header {
+        margin-top: 45px;
+        height: 74px;
+    }
+}
