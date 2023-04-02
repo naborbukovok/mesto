@@ -2,3 +2,9 @@
     max-width: 16px;
     aspect-ratio: 1/1;
 }
+
+@media screen and (min-width: 640px) {
+    .profile__add-button-image {
+        max-width: 22px;
+    }
+}

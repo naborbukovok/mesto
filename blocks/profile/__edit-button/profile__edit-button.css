@@ -1,3 +1,11 @@
 .profile__edit-button {
     max-width: 18px;
+    aspect-ratio: 1/1;
+}
+
+@media screen and (min-width: 880px) {
+    .profile__edit-button {
+        max-width: 24px;
+        padding-top: 4px;
+    }
 }
