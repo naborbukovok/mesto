@@ -1,0 +1,5 @@
+.element__like-button {
+    width: 22px;
+    aspect-ratio: 22/19;
+    background-image: url('../../../images/like-button.svg');
+}
