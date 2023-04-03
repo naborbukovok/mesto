@@ -5,6 +5,7 @@
     aspect-ratio: 22/19;
     background-image: url('../../../images/like-button.svg');
     background-color: transparent;
+    cursor: pointer;
     transition: opacity 0.5s;
 }
 

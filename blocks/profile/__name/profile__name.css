@@ -1,12 +1,15 @@
 .profile__name {
+    max-width: 80%;
     margin: 0;
     padding: 0 0 0 28px;
-    white-space: nowrap;
     color: white;
     font-weight: 500;
     font-size: 27px;
     line-height: 33px;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 @media screen and (min-width: 640px) {
