@@ -3,15 +3,9 @@
     padding-left: 27px;
 }
 
-@media screen and (min-width: 880px) {
-    .header__logo {
-        width: 142px;
-        padding-left: calc(27px - (100vw - 880px)); /* Плавный сдвиг логотипа влево на промежуточных расширениях. */
-    }
-}
-
 @media screen and (min-width: 907px) {
     .header__logo {
+        width: 142px;
         padding-left: 0;
     }
 }

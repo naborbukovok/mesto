@@ -1,17 +1,17 @@
-let name = document.querySelector('.profile__name');
-let description = document.querySelector('.profile__description');
+let nameCurrent = document.querySelector('.profile__name');
+let descriptionCurrent = document.querySelector('.profile__description');
 
 let popup = document.querySelector('.popup');
 let form = popup.querySelector('.popup__form');
-let nameInput = form.querySelectorAll('.popup__field')[0];
-let descriptionInput = form.querySelectorAll('.popup__field')[1];
+let nameInput = form.querySelector('input[name=name]');
+let descriptionInput = form.querySelector('input[name=description]');
 
 let editButton = document.querySelector('.profile__edit-button');
 let closeButton = document.querySelector('.popup__close-button');
 
 function openPopup() {
-    nameInput.value = name.textContent;
-    descriptionInput.value = description.textContent;
+    nameInput.value = nameCurrent.textContent;
+    descriptionInput.value = descriptionCurrent.textContent;
 
     popup.classList.add('popup_opened');
 }
@@ -23,8 +23,8 @@ function closePopup() {
 function handleFormSubmit (evt) {
     evt.preventDefault();
 
-    name.textContent = nameInput.value;
-    description.textContent = descriptionInput.value;
+    nameCurrent.textContent = nameInput.value;
+    descriptionCurrent.textContent = descriptionInput.value;
 
     closePopup();
 }
