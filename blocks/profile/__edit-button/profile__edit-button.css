@@ -3,7 +3,7 @@
     border: 0;
     width: 18px;
     height: 18px;
-    background-color: transparent;
+    background: transparent url('../../../images/edit-button.svg') no-repeat center / contain;
     cursor: pointer;
     transition: opacity 0.5s;
 }
@@ -12,7 +12,7 @@
     opacity: 0.6;
 }
 
-@media screen and (min-width: 880px) {
+@media screen and (min-width: 907px) {
     .profile__edit-button {
         width: 24px;
         height: 24px;

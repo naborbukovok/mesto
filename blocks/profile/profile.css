@@ -15,14 +15,6 @@
     }
 }
 
-@media screen and (min-width: 880px) {
-    .profile {
-        padding-left: calc(27px - (100vw - 880px)); /* Плавный сдвиг влево на промежуточных расширениях. */
-        padding-right: calc(27px - (100vw - 880px)); /* Плавный сдвиг вправо на промежуточных расширениях. */
-        width: calc(100% - 2 * (27px - (100vw - 880px)));
-    }
-}
-
 @media screen and (min-width: 907px) {
     .profile {
         padding-left: 0;

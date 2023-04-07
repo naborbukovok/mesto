@@ -7,15 +7,10 @@
     row-gap: 20px;
 }
 
-@media screen and (min-width: 880px) {
-    .elements {
-        margin-top: 50px;
-    }
-}
-
 @media screen and (min-width: 907px) {
     .elements {
-        margin-left: 0; /* Карточки встанут по 3 в ряд, когда лого и профиль перестанут сдвигаться. */
+        margin-top: 50px;
+        margin-left: 0;
         margin-right: 0;
     }
 }

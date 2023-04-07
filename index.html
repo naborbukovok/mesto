@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Фото-блог">
     <meta name="author" content="Мария Молокова">
-    <title>Mesto</title>
+    <title>Место</title>
     <link rel="stylesheet" href="pages/index.css">
 </head>
 <body class="page">
@@ -18,14 +18,10 @@
             <img src="./images/cousteau.jpg" alt="Фото профиля" class="profile__avatar">
             <div class="profile__info">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button">
-                    <img src="./images/edit-button.svg" alt="Редактировать" class="profile__edit-button-image">
-                </button>
-                <h2 class="profile__description">Исследователь океана</h2>
+                <button type="button" aria-label="Редактировать" class="profile__edit-button"></button>
+                <p class="profile__description">Исследователь океана</p>
             </div>
-            <button class="profile__add-button">
-                <img src="./images/add-button.svg" alt="Добавить место" class="profile__add-button-image">
-            </button>
+            <button type="button" aria-label="Добавить" class="profile__add-button"></button>
         </section>
 
         <section class="elements">
@@ -33,42 +29,42 @@
                 <img src="./images/karachayevsk.jpg" alt="Сентинский храм" class="element__image">
                 <div class="element__image-description">
                     <h2 class="element__title">Карачаевск</h2>
-                    <button class="element__like-button"></button>
+                    <button type="button" aria-label="Нравится" class="element__like-button"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/elbrus.jpg" alt="Пейзаж с горой на закате" class="element__image">
                 <div class="element__image-description">
                     <h2 class="element__title">Гора Эльбрус</h2>
-                    <button class="element__like-button"></button>
+                    <button type="button" aria-label="Нравится" class="element__like-button"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/dombay.jpg" alt="Туманный пейзаж с горой" class="element__image">
                 <div class="element__image-description">
                     <h2 class="element__title">Домбай</h2>
-                    <button class="element__like-button"></button>
+                    <button type="button" aria-label="Нравится" class="element__like-button"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/karachayevsk.jpg" alt="Сентинский храм" class="element__image">
                 <div class="element__image-description">
                     <h2 class="element__title">Карачаевск</h2>
-                    <button class="element__like-button"></button>
+                    <button type="button" aria-label="Нравится" class="element__like-button"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/elbrus.jpg" alt="Пейзаж с горой на закате" class="element__image">
                 <div class="element__image-description">
                     <h2 class="element__title">Гора Эльбрус</h2>
-                    <button class="element__like-button"></button>
+                    <button type="button" aria-label="Нравится" class="element__like-button"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/dombay.jpg" alt="Туманный пейзаж с горой" class="element__image">
                 <div class="element__image-description">
                     <h2 class="element__title">Карачаево-Черкесия</h2>
-                    <button class="element__like-button"></button>
+                    <button type="button" aria-label="Нравится" class="element__like-button"></button>
                 </div>
             </article>
         </section>
@@ -80,15 +76,15 @@
 
     <div class="popup">
         <div class="popup__container">
-            <input type="image" src="./images/close-button.svg" alt="Закрыть окно" class="popup__close-button">
+            <button type="button" aria-label="Закрыть" class="popup__close-button"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form">
+            <form name="form" class="popup__form">
                 <input name="name" placeholder="Имя" type="text" class="popup__field" id="name" required>
                 <input name="description" placeholder="О себе" type="text" class="popup__field" id="description" required>
-                <input type="submit" value="Сохранить" class="popup__submit-button">
+                <button type="submit" class="popup__submit-button">Сохранить</button>
             </form>
         </div>
     </div>
-    <script src="index.js"></script>
+    <script src="./scripts/index.js"></script>
 </body>
 </html>
