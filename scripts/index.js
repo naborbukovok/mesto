@@ -3,8 +3,8 @@ let descriptionCurrent = document.querySelector('.profile__description');
 
 let popup = document.querySelector('.popup');
 let form = popup.querySelector('.popup__form');
-let nameInput = form.querySelector('input[name=name]');
-let descriptionInput = form.querySelector('input[name=description]');
+let nameInput = form.name;
+let descriptionInput = form.description;
 
 let editButton = document.querySelector('.profile__edit-button');
 let closeButton = document.querySelector('.popup__close-button');
