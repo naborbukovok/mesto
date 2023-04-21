@@ -48,7 +48,7 @@ function handleUserFormSubmit (evt) {
 
 function handlePlaceFormSubmit (evt) {
     evt.preventDefault();
-    let newElement = createElement(placeTitleInput.value, placeImageInput.value);
+    const newElement = createElement(placeTitleInput.value, placeImageInput.value);
     elements.prepend(newElement);
     closePopup(placePopup);
 }
@@ -121,6 +121,6 @@ imageCloseButton.addEventListener('click', () => {
 
 // Добавление карточек при первом запуске страницы.
 initialCards.forEach(item => {
-    let newElement = createElement(item.name, item.link);
+    const newElement = createElement(item.name, item.link);
     elements.append(newElement);
 });
