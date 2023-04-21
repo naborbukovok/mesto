@@ -1,144 +1,126 @@
-/* Основные элементы страницы. */
-let nameCurrent = document.querySelector('.profile__name');
-let descriptionCurrent = document.querySelector('.profile__description');
-let elements = document.querySelector('.elements');
-let imagePopups = document.querySelector('.image-popups');
+// Элементы секции profile.
+const nameCurrent = document.querySelector('.profile__name');
+const descriptionCurrent = document.querySelector('.profile__description');
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
 
-/* Кнопки. */
-let editButton = document.querySelector('.profile__edit-button');
-let addButton = document.querySelector('.profile__add-button');
+// Элементы секции elements.
+const elements = document.querySelector('.elements');
 
-/* Форма для редактирования профиля пользователя. */
-let userPopup = document.querySelector('.popup_content_user');
-let userForm = userPopup.querySelector('.popup__form');
-let userNameInput = userForm.name;
-let userDescriptionInput = userForm.description;
-let userCloseButton = userPopup.querySelector('.popup__close-button');
+// Элементы формы редактирования профиля.
+const userPopup = document.querySelector('.popup_content_user');
+const userForm = userPopup.querySelector('.popup__form');
+const userNameInput = userForm.name;
+const userDescriptionInput = userForm.description;
+const userCloseButton = userPopup.querySelector('.popup__close-button');
 
-/* Форма для добавления места. */
-let placePopup = document.querySelector('.popup_content_place');
-let placeForm = placePopup.querySelector('.popup__form');
-let placeTitleInput = placeForm.title;
-let placeImageInput = placeForm.image;
-let placeCloseButton = placePopup.querySelector('.popup__close-button');
+// Элементы формы добавления нового места.
+const placePopup = document.querySelector('.popup_content_place');
+const placeForm = placePopup.querySelector('.popup__form');
+const placeTitleInput = placeForm.title;
+const placeImageInput = placeForm.image;
+const placeCloseButton = placePopup.querySelector('.popup__close-button');
 
-/* Редактирование информации о пользователе. */
-function openUserPopup() {
-    userNameInput.value = nameCurrent.textContent;
-    userDescriptionInput.value = descriptionCurrent.textContent;
+// Элементы попапа изображения.
+const imagePopup = document.querySelector('.popup_content_image');
+const imagePopupPhoto = imagePopup.querySelector('.popup__image');
+const imagePopupDescription = imagePopup.querySelector('.popup__image-description');
+const imageCloseButton = imagePopup.querySelector('.popup__close-button');
 
-    userPopup.classList.add('popup_opened');
+// Шаблон элемента.
+const elementTemplate = document.querySelector('#element-template');
+
+// Функции для работы с попапами.
+function openPopup(popupElement) {
+    popupElement.classList.add('popup_opened');
 }
 
-function closeUserPopup() {
-    userPopup.classList.remove('popup_opened');
+function closePopup(popupElement) {
+    popupElement.classList.remove('popup_opened');
 }
 
 function handleUserFormSubmit (evt) {
     evt.preventDefault();
-
     nameCurrent.textContent = userNameInput.value;
     descriptionCurrent.textContent = userDescriptionInput.value;
-
-    closeUserPopup();
-}
-
-editButton.addEventListener('click', openUserPopup);
-userForm.addEventListener('submit', handleUserFormSubmit);
-userCloseButton.addEventListener('click', closeUserPopup);
-
-/* Добавление места. */
-function openPlacePopup() {
-    placeTitleInput.value = "";
-    placeImageInput.value = "";
-    placePopup.classList.add('popup_opened');
-}
-
-function closePlacePopup() {
-    placePopup.classList.remove('popup_opened');
+    closePopup(userPopup);
 }
 
 function handlePlaceFormSubmit (evt) {
     evt.preventDefault();
-    addElement(placeTitleInput.value, placeImageInput.value);
-    closePlacePopup();
+    let newElement = createElement(placeTitleInput.value, placeImageInput.value);
+    elements.prepend(newElement);
+    closePopup(placePopup);
 }
 
-addButton.addEventListener('click', openPlacePopup);
-placeForm.addEventListener('submit', handlePlaceFormSubmit);
-placeCloseButton.addEventListener('click', closePlacePopup);
+// Функция для создания элемента.
+function createElement(name, link) {
+    const newElement = elementTemplate.content.cloneNode(true).querySelector('.element');
 
-function addElement(name, link) {
-    const elementTemplate = document.querySelector('#element-template');
-    const newElement = elementTemplate.content.cloneNode(true);
-
-    /* Заполнение карточки и попапа, настройка открытия и закрытия попапа. */
-    let newElementTitle = newElement.querySelector('.element__title');
-    let newElementImage = newElement.querySelector('.element__image');
-    let newElementPopup = newElement.querySelector('.popup');
-    let newElementPopupCloseButton = newElementPopup.querySelector('.popup__close-button');
-    let newElementPopupImage = newElementPopup.querySelector('.popup__image');
+    // Заполнение карточки.
+    const newElementTitle = newElement.querySelector('.element__title');
+    const newElementImage = newElement.querySelector('.element__image');
     newElementTitle.textContent = name;
     newElementImage.src = link;
     newElementImage.alt = `Фото: ${name}`;
-    newElementPopupImage.src = link;
-    newElementPopupImage.alt = `Фото: ${name}`;
+
+    // Настройка открытия попапа с фотографией.
     newElementImage.addEventListener('click', () => {
-        newElementPopup.classList.add('popup_opened');
-    });
-    newElementPopupCloseButton.addEventListener('click', () => {
-        newElementPopup.classList.remove('popup_opened');
+        imagePopupPhoto.src = newElementImage.src;
+        imagePopupPhoto.alt = newElementImage.alt;
+        imagePopupDescription.textContent = newElementTitle.textContent;
+        openPopup(imagePopup);
     });
 
-    /* Настройка удаления карточки. */
-    let trashButton = newElement.querySelector('.element__trash-button');
+    // Настройка удаления карточки.
+    const trashButton = newElement.querySelector('.element__trash-button');
     trashButton.addEventListener('click', () => {
         trashButton.parentElement.remove();
     });
 
-    /* Настройка лайка карточки. */
-    let likeButton = newElement.querySelector('.element__like-button');
+    // Настройка лайка карточки.
+    const likeButton = newElement.querySelector('.element__like-button');
     likeButton.addEventListener('click', () => {
         likeButton.classList.toggle('element__like-button_enabled');
     });
 
-    elements.prepend(newElement);
+    return newElement;
 }
 
-/* Запуск страницы. */
-const initialCards = [
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    }
-];
-
-initialCards.forEach(item => {
-    addElement(item.name, item.link);
+// Обработчики событий для кнопок в секции profile.
+editButton.addEventListener('click', () => {
+    userNameInput.value = nameCurrent.textContent;
+    userDescriptionInput.value = descriptionCurrent.textContent;
+    openPopup(userPopup);
 });
 
+addButton.addEventListener('click', () => {
+    placeTitleInput.value = "";
+    placeImageInput.value = "";
+    openPopup(placePopup);
+});
 
+// Обработчики событий для кнопок в форме редактирования профиля.
+userCloseButton.addEventListener('click', () => {
+    closePopup(userPopup);
+});
 
+userForm.addEventListener('submit', handleUserFormSubmit);
 
+// Обработчики событий для кнопок в форме добавления нового места.
+placeCloseButton.addEventListener('click', () => {
+    closePopup(placePopup);
+});
 
+placeForm.addEventListener('submit', handlePlaceFormSubmit);
 
+// Обработчик события закрытия попапа с фотографией.
+imageCloseButton.addEventListener('click', () => {
+    closePopup(imagePopup);
+});
+
+// Добавление карточек при первом запуске страницы.
+initialCards.forEach(item => {
+    let newElement = createElement(item.name, item.link);
+    elements.append(newElement);
+});
