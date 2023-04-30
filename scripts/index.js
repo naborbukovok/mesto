@@ -19,6 +19,7 @@ const placePopup = document.querySelector('.popup_content_place');
 const placeForm = placePopup.querySelector('.popup__form');
 const placeTitleInput = placeForm.title;
 const placeImageInput = placeForm.image;
+const placeButton = placeForm.querySelector('.popup__button');
 const placeCloseButton = placePopup.querySelector('.popup__close-button');
 
 // Элементы попапа изображения.
@@ -42,8 +43,8 @@ const closePopup = (popupElement) => {
 }
 
 const closePopupWithKeyboard = (evt) => {
-    const openedPopup = document.querySelector('.popup_opened');
-    if (evt.key === 'Escape' && openedPopup) {
+    if (evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_opened');
         closePopup(openedPopup);
     }
 }
@@ -107,6 +108,8 @@ addButton.addEventListener('click', () => {
     placeTitleInput.value = "";
     placeImageInput.value = "";
     openPopup(placePopup);
+    placeButton.classList.add('popup__button_disabled');
+    placeButton.setAttribute('disabled', 'disabled');
 });
 
 // Обработчики событий для формы редактирования профиля.
@@ -136,6 +139,12 @@ placeCloseButton.addEventListener('click', () => {
 placeForm.addEventListener('submit', handlePlaceFormSubmit);
 
 // Обработчик события закрытия попапа с фотографией.
+imagePopup.addEventListener('click', (evt) => {
+    if (evt.currentTarget === evt.target) {
+        closePopup(imagePopup);
+    }
+});
+
 imageCloseButton.addEventListener('click', () => {
     closePopup(imagePopup);
 });
