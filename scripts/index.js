@@ -31,22 +31,31 @@ const imageCloseButton = imagePopup.querySelector('.popup__close-button');
 const elementTemplate = document.querySelector('#element-template');
 
 // Функции для работы с попапами.
-function openPopup(popupElement) {
+const openPopup = (popupElement) => {
     popupElement.classList.add('popup_opened');
+    document.addEventListener('keydown', closePopupWithKeyboard);
 }
 
-function closePopup(popupElement) {
+const closePopup = (popupElement) => {
     popupElement.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupWithKeyboard);
 }
 
-function handleUserFormSubmit (evt) {
+const closePopupWithKeyboard = (evt) => {
+    const openedPopup = document.querySelector('.popup_opened');
+    if (evt.key === 'Escape' && openedPopup) {
+        closePopup(openedPopup);
+    }
+}
+
+const handleUserFormSubmit = (evt) => {
     evt.preventDefault();
     nameCurrent.textContent = userNameInput.value;
     descriptionCurrent.textContent = userDescriptionInput.value;
     closePopup(userPopup);
 }
 
-function handlePlaceFormSubmit (evt) {
+const handlePlaceFormSubmit = (evt) => {
     evt.preventDefault();
     const newElement = createElement(placeTitleInput.value, placeImageInput.value);
     elements.prepend(newElement);
@@ -54,7 +63,7 @@ function handlePlaceFormSubmit (evt) {
 }
 
 // Функция для создания элемента.
-function createElement(name, link) {
+const createElement = (name, link) => {
     const newElement = elementTemplate.content.cloneNode(true).querySelector('.element');
 
     // Заполнение карточки.
@@ -100,14 +109,26 @@ addButton.addEventListener('click', () => {
     openPopup(placePopup);
 });
 
-// Обработчики событий для кнопок в форме редактирования профиля.
+// Обработчики событий для формы редактирования профиля.
+userPopup.addEventListener('click', (evt) => {
+    if (evt.currentTarget === evt.target) {
+        closePopup(userPopup);
+    }
+});
+
 userCloseButton.addEventListener('click', () => {
     closePopup(userPopup);
 });
 
 userForm.addEventListener('submit', handleUserFormSubmit);
 
-// Обработчики событий для кнопок в форме добавления нового места.
+// Обработчики событий для формы добавления нового места.
+placePopup.addEventListener('click', (evt) => {
+    if (evt.currentTarget === evt.target) {
+        closePopup(placePopup);
+    }
+});
+
 placeCloseButton.addEventListener('click', () => {
     closePopup(placePopup);
 });
