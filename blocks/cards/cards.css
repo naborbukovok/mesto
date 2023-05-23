@@ -1,4 +1,4 @@
-.elements {
+.cards {
     margin: 34px 17px 0;
     display: flex;
     justify-content: center;
@@ -8,7 +8,7 @@
 }
 
 @media screen and (min-width: 907px) {
-    .elements {
+    .cards {
         margin-top: 50px;
         margin-left: 0;
         margin-right: 0;

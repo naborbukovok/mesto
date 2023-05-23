@@ -1,26 +1,28 @@
 export class FormValidator {
-    constructor(data, formElement) {
-        this._inputSelector = data.inputSelector;
-        this._submitButtonSelector = data.submitButtonSelector;
-        this._inactiveButtonClass = data.inactiveButtonClass;
-        this._inputErrorClass = data.inputErrorClass;
-        this._errorClass = data.errorClass;
+    constructor(formValidatorData, formElement) {
+        this._inputSelector = formValidatorData.inputSelector;
+        this._submitButtonSelector = formValidatorData.submitButtonSelector;
+        this._inactiveButtonClass = formValidatorData.inactiveButtonClass;
+        this._inputErrorClass = formValidatorData.inputErrorClass;
+        this._errorClass = formValidatorData.errorClass;
         this._formElement = formElement;
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     }
 
     enableValidation() {
-        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-        this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-
         this._setEventListeners();
         this._toggleButtonState();
     }
 
-    _setEventListeners() {
-        this._formElement.addEventListener('submit', function (evt) {
-            evt.preventDefault();
+    resetValidation() {
+        this._inputList.forEach((input) => {
+            this._hideInputError(input);
         });
+        this._toggleButtonState();
+    }
 
+    _setEventListeners() {
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._handleChangeInput(inputElement);
