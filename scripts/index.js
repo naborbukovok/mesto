@@ -1,3 +1,9 @@
+import { Card } from './Card.js'
+import { FormValidator } from './FormValidator.js'
+
+// Список форм на странице.
+const formList = Array.from(document.querySelectorAll('.popup__form'));
+
 // Элементы секции profile.
 const nameCurrent = document.querySelector('.profile__name');
 const descriptionCurrent = document.querySelector('.profile__description');
@@ -12,6 +18,9 @@ const userPopup = document.querySelector('.popup_content_user');
 const userForm = userPopup.querySelector('.popup__form');
 const userNameInput = userForm.name;
 const userDescriptionInput = userForm.description;
+const userNameError = userForm.querySelector('.name-error');
+const userDescriptionError = userForm.querySelector('.description-error');
+const userButton = userForm.querySelector('.popup__button');
 const userCloseButton = userPopup.querySelector('.popup__close-button');
 
 // Элементы формы добавления нового места.
@@ -19,6 +28,8 @@ const placePopup = document.querySelector('.popup_content_place');
 const placeForm = placePopup.querySelector('.popup__form');
 const placeTitleInput = placeForm.title;
 const placeImageInput = placeForm.image;
+const placeTitleError = placeForm.querySelector('.title-error');
+const placeImageError = placeForm.querySelector('.image-error');
 const placeButton = placeForm.querySelector('.popup__button');
 const placeCloseButton = placePopup.querySelector('.popup__close-button');
 
@@ -28,13 +39,17 @@ const imagePopupPhoto = imagePopup.querySelector('.popup__image');
 const imagePopupDescription = imagePopup.querySelector('.popup__image-description');
 const imageCloseButton = imagePopup.querySelector('.popup__close-button');
 
-// Шаблон элемента.
-const elementTemplate = document.querySelector('#element-template');
-
 // Функции для работы с попапами.
 const openPopup = (popupElement) => {
     popupElement.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupWithKeyboard);
+}
+
+const handleCardClick = (link, name) => {
+    imagePopupPhoto.src = link;
+    imagePopupPhoto.alt = `Фото: ${name}`;
+    imagePopupDescription.textContent = name;
+    openPopup(imagePopup);
 }
 
 const closePopup = (popupElement) => {
@@ -58,55 +73,41 @@ const handleUserFormSubmit = (evt) => {
 
 const handlePlaceFormSubmit = (evt) => {
     evt.preventDefault();
-    const newElement = createElement(placeTitleInput.value, placeImageInput.value);
+    const newElement = createElement(placeImageInput.value, placeTitleInput.value);
     elements.prepend(newElement);
     closePopup(placePopup);
 }
 
 // Функция для создания элемента.
-const createElement = (name, link) => {
-    const newElement = elementTemplate.content.cloneNode(true).querySelector('.element');
-
-    // Заполнение карточки.
-    const newElementTitle = newElement.querySelector('.element__title');
-    const newElementImage = newElement.querySelector('.element__image');
-    newElementTitle.textContent = name;
-    newElementImage.src = link;
-    newElementImage.alt = `Фото: ${name}`;
-
-    // Настройка открытия попапа с фотографией.
-    newElementImage.addEventListener('click', () => {
-        imagePopupPhoto.src = newElementImage.src;
-        imagePopupPhoto.alt = newElementImage.alt;
-        imagePopupDescription.textContent = newElementTitle.textContent;
-        openPopup(imagePopup);
-    });
-
-    // Настройка удаления карточки.
-    const trashButton = newElement.querySelector('.element__trash-button');
-    trashButton.addEventListener('click', () => {
-        trashButton.parentElement.remove();
-    });
-
-    // Настройка лайка карточки.
-    const likeButton = newElement.querySelector('.element__like-button');
-    likeButton.addEventListener('click', () => {
-        likeButton.classList.toggle('element__like-button_enabled');
-    });
-
-    return newElement;
+const createElement = (link, name) => {
+    const card = new Card(
+        { link, name },
+        '#element-template',
+        () => handleCardClick(link, name)
+    );
+    return card.generateCard();
 }
 
 // Обработчики событий для кнопок в секции profile.
 editButton.addEventListener('click', () => {
     userNameInput.value = nameCurrent.textContent;
+    userNameInput.classList.remove('popup__input_type_error');
     userDescriptionInput.value = descriptionCurrent.textContent;
+    userDescriptionInput.classList.remove('popup__input_type_error');
+    userNameError.classList.remove('popup__error_visible');
+    userDescriptionError.classList.remove('popup__error_visible');
     openPopup(userPopup);
+    userButton.classList.add('popup__button_disabled');
+    userButton.setAttribute('disabled', 'disabled');
 });
 
 addButton.addEventListener('click', () => {
-    placeTitleInput.value = "";
-    placeImageInput.value = "";
+    placeTitleInput.value = '';
+    placeTitleInput.classList.remove('popup__input_type_error');
+    placeImageInput.value = '';
+    placeImageInput.classList.remove('popup__input_type_error');
+    placeTitleError.classList.remove('popup__error_visible');
+    placeImageError.classList.remove('popup__error_visible');
     openPopup(placePopup);
     placeButton.classList.add('popup__button_disabled');
     placeButton.setAttribute('disabled', 'disabled');
@@ -149,8 +150,49 @@ imageCloseButton.addEventListener('click', () => {
     closePopup(imagePopup);
 });
 
-// Добавление карточек при первом запуске страницы.
+// Настройка валидации форм и добавление карточек при первом запуске страницы.
+formList.forEach((formElement) => {
+    const formValidator = new FormValidator(
+        {
+            inputSelector: '.popup__input',
+            submitButtonSelector: '.popup__button',
+            inactiveButtonClass: 'popup__button_disabled',
+            inputErrorClass: 'popup__input_type_error',
+            errorClass: 'popup__error_visible'
+        },
+        formElement
+    );
+    formValidator.enableValidation();
+});
+
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
+
 initialCards.forEach(item => {
-    const newElement = createElement(item.name, item.link);
+    const newElement = createElement(item.link, item.name);
     elements.append(newElement);
 });
