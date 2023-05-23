@@ -1,4 +1,4 @@
-.element__image {
+.card__image {
     display: block;
     width: 100%;
     aspect-ratio: 1/1;
@@ -7,6 +7,6 @@
     transition: opacity 0.8s;
 }
 
-.element__image:hover {
+.card__image:hover {
     opacity: 0.8;
 }

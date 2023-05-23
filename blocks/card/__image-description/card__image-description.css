@@ -1,4 +1,4 @@
-.element__image-description {
+.card__image-description {
     margin: 25px 20px 0;
     width: calc(100% - 40px);
     display: flex;
