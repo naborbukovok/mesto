@@ -22,7 +22,6 @@ const userPopup = document.querySelector('.popup_content_user');
 const userForm = userPopup.querySelector('.popup__form');
 const userNameInput = userForm.name;
 const userDescriptionInput = userForm.description;
-const userButton = userForm.querySelector('.popup__button');
 const userCloseButton = userPopup.querySelector('.popup__close-button');
 
 // Элементы формы добавления нового места.
@@ -38,18 +37,31 @@ const imagePopupPhoto = imagePopup.querySelector('.popup__image');
 const imagePopupDescription = imagePopup.querySelector('.popup__image-description');
 const imageCloseButton = imagePopup.querySelector('.popup__close-button');
 
+// Валидаторы форм.
+const userFormValidator = new FormValidator(
+    {
+        inputSelector: '.popup__input',
+        submitButtonSelector: '.popup__button',
+        inactiveButtonClass: 'popup__button_disabled',
+        inputErrorClass: 'popup__input_type_error',
+        errorClass: 'popup__error_visible'
+    },
+    userForm
+);
+
+const placeFormValidator = new FormValidator(
+    {
+        inputSelector: '.popup__input',
+        submitButtonSelector: '.popup__button',
+        inactiveButtonClass: 'popup__button_disabled',
+        inputErrorClass: 'popup__input_type_error',
+        errorClass: 'popup__error_visible'
+    },
+    placeForm
+);
+
 // Функция для сброса валидации формы.
-const resetValidation = (form) => {
-    const formValidator = new FormValidator(
-        {
-            inputSelector: '.popup__input',
-            submitButtonSelector: '.popup__button',
-            inactiveButtonClass: 'popup__button_disabled',
-            inputErrorClass: 'popup__input_type_error',
-            errorClass: 'popup__error_visible'
-        },
-        form
-    );
+const resetValidation = (formValidator) => {
     formValidator.resetValidation();
 }
 
@@ -115,15 +127,13 @@ const createCard = (cardData) => {
 editButton.addEventListener('click', () => {
     userNameInput.value = nameCurrent.textContent;
     userDescriptionInput.value = descriptionCurrent.textContent;
-    resetValidation(userForm);
+    resetValidation(userFormValidator);
     openPopup(userPopup);
-    userButton.classList.add('popup__button_disabled');
-    userButton.setAttribute('disabled', 'disabled');
 });
 
 addButton.addEventListener('click', () => {
     placeForm.reset();
-    resetValidation(placeForm);
+    resetValidation(placeFormValidator);
     openPopup(placePopup);
 });
 
@@ -152,19 +162,8 @@ popups.forEach((popup) => {
 })
 
 // Настройка валидации форм и добавление карточек при первом запуске страницы.
-forms.forEach((form) => {
-    const formValidator = new FormValidator(
-        {
-            inputSelector: '.popup__input',
-            submitButtonSelector: '.popup__button',
-            inactiveButtonClass: 'popup__button_disabled',
-            inputErrorClass: 'popup__input_type_error',
-            errorClass: 'popup__error_visible'
-        },
-        form
-    );
-    formValidator.enableValidation();
-});
+userFormValidator.enableValidation();
+placeFormValidator.enableValidation();
 
 initialCards.forEach(initialCard => {
     const card = createCard(initialCard);
