@@ -11,8 +11,6 @@ export const cardsContainerSelector = '.cards';
 // Попап для изменения информации о пользователе.
 export const userPopupSelector = '.popup_content_user';
 export const userPopupForm = document.querySelector(`${userPopupSelector} .popup__form`);
-export const userPopupFormInputName = userPopupForm.name;
-export const userPopupFormInputDescription = userPopupForm.description;
 
 // Попап для добавления места.
 export const placePopupSelector = '.popup_content_place';

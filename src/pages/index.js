@@ -12,17 +12,28 @@ import {
     userDescriptionSelector,
     userNameSelector,
     userPopupForm,
-    userPopupFormInputDescription,
-    userPopupFormInputName,
     userPopupSelector
-} from './utils/constants.js'
+} from '../utils/constants.js'
 
-import Card from './components/Card.js'
-import FormValidator from './components/FormValidator.js'
-import PopupWithForm from './components/PopupWithForm.js'
-import PopupWithImage from './components/PopupWithImage.js'
-import Section from './components/Section.js'
-import UserInfo from './components/UserInfo.js'
+import Card from '../components/Card.js'
+import FormValidator from '../components/FormValidator.js'
+import PopupWithForm from '../components/PopupWithForm.js'
+import PopupWithImage from '../components/PopupWithImage.js'
+import Section from '../components/Section.js'
+import UserInfo from '../components/UserInfo.js'
+
+// Функция для создания карточки.
+function createCard(cardData) {
+    const card = new Card(
+        cardData,
+        cardTemplateSelector,
+        () => {
+            imagePopup.open(cardData);
+        }
+    );
+    const cardElement = card.generateCard();
+    return cardElement;
+}
 
 // Информация профиля.
 const userInfo = new UserInfo(
@@ -37,14 +48,7 @@ const cards = new Section(
     {
         items: initialCards.reverse(),
         renderer: (cardData) => {
-            const card = new Card(
-                cardData,
-                cardTemplateSelector,
-                () => {
-                    imagePopup.open({ link: cardData.link, name: cardData.name });
-                }
-            );
-            const cardElement = card.generateCard();
+            const cardElement = createCard({ link: cardData.link, name: cardData.name });
             cards.addItem(cardElement);
         }
     },
@@ -62,14 +66,7 @@ const userPopup = new PopupWithForm(
 const placePopup = new PopupWithForm(
     placePopupSelector,
     (cardData) => {
-        const card = new Card(
-            { link: cardData.image, name: cardData.title },
-            cardTemplateSelector,
-            () => {
-                imagePopup.open({ link: cardData.image, name: cardData.title });
-            }
-        );
-        const cardElement = card.generateCard();
+        const cardElement = createCard({ link: cardData.image, name: cardData.title });
         cards.addItem(cardElement);
     }
 );
@@ -109,8 +106,9 @@ placePopupFormValidator.enableValidation();
 
 editButton.addEventListener('click', () => {
     const userData = userInfo.getUserInfo();
-    userPopupFormInputName.value = userData.name;
-    userPopupFormInputDescription.value = userData.description;
+    // userPopupFormInputName.value = userData.name;
+    // userPopupFormInputDescription.value = userData.description;
+    userPopup.setInputValues(userData);
     userPopupFormValidator.resetValidation();
     userPopup.open();
 });
