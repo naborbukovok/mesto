@@ -14,11 +14,12 @@
 
     <main class="content">
         <section class="profile">
-            <img src="<%=require('./images/cousteau.jpg')%>" alt="Фото профиля" class="profile__avatar">
+            <button type="button" aria-label="Заменить фото" class="profile__avatar-edit-button"></button>
+            <img src="" alt="Фото профиля" class="profile__avatar">
             <div class="profile__info">
-                <h1 class="profile__name">Жак-Ив Кусто</h1>
+                <h1 class="profile__name">...</h1>
                 <button type="button" aria-label="Редактировать" class="profile__edit-button"></button>
-                <p class="profile__description">Исследователь океана</p>
+                <p class="profile__description">...</p>
             </div>
             <button type="button" aria-label="Добавить" class="profile__add-button"></button>
         </section>
@@ -29,6 +30,20 @@
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
+
+    <div class="popup popup_content_avatar">
+        <div class="popup__container popup__container_type_form">
+            <button type="button" aria-label="Закрыть" class="popup__close-button"></button>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <form name="form" class="popup__form" novalidate>
+                <label class="popup__field">
+                    <input name="avatar" placeholder="Ссылка на картинку" type="url" class="popup__input" id="avatar" required>
+                    <span class="popup__error avatar-error"></span>
+                </label>
+                <button type="submit" class="popup__button">Сохранить</button>
+            </form>
+        </div>
+    </div>
 
     <div class="popup popup_content_user">
         <div class="popup__container popup__container_type_form">
@@ -66,6 +81,16 @@
         </div>
     </div>
 
+    <div class="popup popup_content_confirmation">
+        <div class="popup__container popup__container_type_form">
+            <button type="button" aria-label="Закрыть" class="popup__close-button"></button>
+            <h2 class="popup__title">Вы уверены?</h2>
+            <form name="form" class="popup__form" novalidate>
+                <button type="submit" class="popup__button popup__button_margin-top_small">Да</button>
+            </form>
+        </div>
+    </div>
+
     <div class="popup popup_content_image">
         <div class="popup__container popup__container_type_image">
             <button type="button" aria-label="Закрыть" class="popup__close-button"></button>
@@ -80,7 +105,10 @@
             <img class="card__image" alt="">
             <div class="card__image-description">
                 <h2 class="card__title"></h2>
-                <button type="button" aria-label="Нравится" class="card__like-button"></button>
+                <div class = "card__like-container">
+                    <button type="button" aria-label="Нравится" class="card__like-button"></button>
+                    <p class="card__like-count"></p>
+                </div>
             </div>
         </article>
     </template>
