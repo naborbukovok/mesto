@@ -1,19 +1,16 @@
 export default class Api {
     constructor(data) {
-      this.baseUrl = data.baseUrl;
-      this.headers = data.headers;
+        this.baseUrl = data.baseUrl;
+        this.headers = data.headers;
     }
-  
+
     // Загрузка информации о пользователе с сервера (GET).
     getUserInfo() {
         return fetch(`${this.baseUrl}/users/me`, {
             headers: this.headers,
         })
             .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(res.status);
+                return this._getResponseData(res);
             })
     }
 
@@ -22,12 +19,9 @@ export default class Api {
         return fetch(`${this.baseUrl}/cards`, {
             headers: this.headers,
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(res.status);
-        })
+            .then((res) => {
+                return this._getResponseData(res);
+            })
     }
 
     // Редактирование аватара (PATCH).
@@ -37,12 +31,9 @@ export default class Api {
             headers: this.headers,
             body: JSON.stringify({ avatar })
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(res.status);
-        })
+            .then((res) => {
+                return this._getResponseData(res);
+            })
     }
 
     // Редактирование профиля (PATCH).
@@ -52,12 +43,9 @@ export default class Api {
             headers: this.headers,
             body: JSON.stringify({ name, about })
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(res.status);
-        })
+            .then((res) => {
+                return this._getResponseData(res);
+            })
     }
 
     // Добавление новой карточки (POST).
@@ -67,12 +55,9 @@ export default class Api {
             headers: this.headers,
             body: JSON.stringify({ name, link })
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(res.status);
-        })
+            .then((res) => {
+                return this._getResponseData(res);
+            })
     }
 
     // Удаление карточки (DELETE).
@@ -81,12 +66,9 @@ export default class Api {
             method: "DELETE",
             headers: this.headers
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(res.status);
-        })
+            .then((res) => {
+                return this._getResponseData(res);
+            })
     }
 
     // Добавление лайка (PUT).
@@ -95,12 +77,9 @@ export default class Api {
             method: "PUT",
             headers: this.headers
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(res.status);
-        })
+            .then((res) => {
+                return this._getResponseData(res);
+            })
     }
 
     // Удаление лайка (DELETE).
@@ -109,12 +88,15 @@ export default class Api {
             method: "DELETE",
             headers: this.headers
         })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(res.status);
-        })
+            .then((res) => {
+                return this._getResponseData(res);
+            })
     }
 
+    _getResponseData(res) {
+        if (!res.ok) {
+            return Promise.reject(res.status);
+        }
+        return res.json();
+    }
 }
