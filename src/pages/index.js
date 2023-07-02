@@ -105,6 +105,7 @@ const avatarPopup = new PopupWithForm(
         api.setAvatar(avatarData.avatar)
             .then((data) => {
                 userInfo.setAvatar(data.avatar);
+                avatarPopup.close();
             })
             .catch((error) => {
                 console.log("Ошибка. Запрос не выполнен: ", error);
@@ -125,6 +126,7 @@ const userPopup = new PopupWithForm(
                     name: data.name,
                     description: data.about
                 });
+                userPopup.close();
             })
             .catch((error) => {
                 console.log("Ошибка. Запрос не выполнен: ", error);
@@ -143,6 +145,7 @@ const placePopup = new PopupWithForm(
             .then((data) => {
                 const cardElement = createCard(data);
                 cards.addItem(cardElement);
+                placePopup.close();
             })
             .catch((error) => {
                 console.log("Ошибка. Запрос не выполнен: ", error);
@@ -159,6 +162,7 @@ const confirmationPopup = new PopupWithConfirmation(
         api.deleteCard(cardId)
             .then(() => {
                 card.deleteCard();
+                confirmationPopup.close();
             })
             .catch((error) => {
                 console.log("Ошибка. Запрос не выполнен: ", error);
